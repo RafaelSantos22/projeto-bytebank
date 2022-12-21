@@ -1,0 +1,15 @@
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\bin\Debug\net6.0\Projeto_ByteBank.exe
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\bin\Debug\net6.0\Projeto_ByteBank.deps.json
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\bin\Debug\net6.0\Projeto_ByteBank.runtimeconfig.json
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\bin\Debug\net6.0\Projeto_ByteBank.dll
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\bin\Debug\net6.0\Projeto_ByteBank.pdb
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\Projeto_ByteBank.csproj.AssemblyReference.cache
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\Projeto_ByteBank.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\Projeto_ByteBank.AssemblyInfoInputs.cache
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\Projeto_ByteBank.AssemblyInfo.cs
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\Projeto_ByteBank.csproj.CoreCompileInputs.cache
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\Projeto_ByteBank.dll
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\refint\Projeto_ByteBank.dll
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\Projeto_ByteBank.pdb
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\Projeto_ByteBank.genruntimeconfig.cache
+C:\Users\rafa_\OneDrive\Documentos\Sharpcoders\exemplos\Projeto_ByteBank\Projeto_ByteBank\obj\Debug\net6.0\ref\Projeto_ByteBank.dll
