@@ -64,7 +64,6 @@ namespace Projeto_ByteBank
             Console.Write("Digite o cpf: ");
             string cpfParaDeletar = Console.ReadLine();
             int indexParaDeletar = cpfs.FindIndex(cpf => cpf == cpfParaDeletar);
-            Console.WriteLine();
 
             if (indexParaDeletar == -1)
             {
@@ -75,6 +74,7 @@ namespace Projeto_ByteBank
             {
                 Console.Write("Digite sua senha: ");
                 string senha = Console.ReadLine();
+                Console.WriteLine();
 
                 while (senha != senhas[indexParaDeletar])
                 {
@@ -85,57 +85,74 @@ namespace Projeto_ByteBank
                 titulares.RemoveAt(indexParaDeletar);
                 senhas.RemoveAt(indexParaDeletar);
                 saldos.RemoveAt(indexParaDeletar);
+                Console.Clear();
+                Console.WriteLine("Conta deletada com sucesso!\n");
             }
-            Console.Clear();
-            Console.WriteLine("Conta deletada com sucesso!\n");
         }
 
         static void ListarTodasAsContas(List<string> cpfs, List<string> titulares, List<double> saldos)
         {
-            for (int i = 0; i < cpfs.Count; i++)
+            Console.Clear();
+            Console.WriteLine("===== Contas registradas no BYTE BANK =====\n");
+
+            if (cpfs.Count > 0)
             {
-                if (cpfs.Count > 0)
+                for (int i = 0; i < cpfs.Count; i++)
                 {
                     ApresentaConta(i, cpfs, titulares, saldos);
                 }
-                else
-                {
-                    Console.WriteLine("Não há contas cadastradas!");
-                }
+            }
+            else
+            {
+                Console.WriteLine("Não há contas cadastradas!\n");
             }
         }
 
-        static void ApresentarUsuario(List<string> cpfs, List<string> titulares, List<double> saldos)
+        static void DetalhesUsuario(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
+            Console.Clear();
+            Console.WriteLine("===== Detalhes do usuário ======\n");
+
             Console.Write("Digite o cpf: ");
             string cpfParaApresentar = Console.ReadLine();
             int indexParaApresentar = cpfs.FindIndex(cpf => cpf == cpfParaApresentar);
 
             if (indexParaApresentar == -1)
             {
-                Console.WriteLine("Não foi possível apresentar esta Conta");
-                Console.WriteLine("MOTIVO: Conta não encontrada.");
+                Console.WriteLine("Não foi possível apresentar esta Conta\n");
+                Console.WriteLine("MOTIVO: Conta não encontrada.\n");
             }
+            else
+            {
+                Console.Write("Digite sua senha: ");
+                string senha = Console.ReadLine();
 
-            ApresentaConta(indexParaApresentar, cpfs, titulares, saldos);
+                while (senha != senhas[indexParaApresentar])
+                {
+                    Console.Write("Senha incorreta! Digite novamente: ");
+                    senha = Console.ReadLine();
+                }
+                Console.WriteLine();
+                ApresentaConta(indexParaApresentar, cpfs, titulares, saldos);
+            }
         }
 
         static void ApresentarValorAcumulado(List<double> saldos)
         {
-            Console.WriteLine($"Total acumulado no banco: {saldos.Sum()}");
+            Console.Clear();
+            Console.WriteLine($"Total acumulado no banco: R$ {saldos.Sum()}\n");
             //return saldos.Aggregate(0.0, (x, y) => x + y);
         }
 
         static void ApresentaConta(int index, List<string> cpfs, List<string> titulares, List<double> saldos)
         {
-            Console.WriteLine($"CPF = {cpfs[index]} | Titular = {titulares[index]} | Saldo = R$ {saldos[index]:F2}");
-            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine($"Titular: {titulares[index]} | CPF: {cpfs[index]} | Saldo = R$ {saldos[index]:F2}\n");
         }
 
         static void ManipularConta(List<string> cpfs, List<string> titulares, List<string> senhas, List<double> saldos)
         {
             Console.Clear();
-            Console.WriteLine("===== Deletando um usuário =====\n");
+            Console.WriteLine("===== Manipular conta =====\n");
 
             Console.Write("Digite o cpf: ");
             string cpfTitular = Console.ReadLine();
@@ -145,7 +162,6 @@ namespace Projeto_ByteBank
             {
                 Console.Clear();
                 Console.WriteLine("Usuário não encontrado!");
-
             }
             else
             {
@@ -157,50 +173,117 @@ namespace Projeto_ByteBank
                     Console.Write("Senha incorreta! Digite novamente: ");
                     senha = Console.ReadLine();
                 }
+
                 Console.Clear();
-                MenuDaConta(titulares, saldos);
+                bool escolheuSair = false;
+                Console.WriteLine($"Seja Bem Vindo(a) {titulares[cpfAcesso]}\n");
+
+                while (escolheuSair == false)
+                {
+                    Console.WriteLine("1 - Ver saldo");
+                    Console.WriteLine("2 - Para depositar");
+                    Console.WriteLine("3 - Para sacar");
+                    Console.WriteLine("4 - Para transferencia");
+                    Console.WriteLine("0 - Voltar para o menu principal\n");
+                    Console.Write("Digite sua opção: ");
+
+                    int opcao = int.Parse(Console.ReadLine());
+
+                    MenuSecundario escolha = (MenuSecundario)opcao;
+
+                    switch (escolha)
+                    {
+                        case MenuSecundario.VerSaldo:
+                            VerSaldo(saldos, cpfAcesso);
+                            break;
+                        case MenuSecundario.Depositar:
+                            Depositar(saldos, cpfAcesso);
+                            break;
+                        case MenuSecundario.Sacar:
+                            Sacar(saldos, cpfAcesso);
+                            break;
+                        case MenuSecundario.Transferir:
+                            Transferir(saldos, cpfAcesso, cpfs);
+                            break;
+                        case MenuSecundario.Sair:
+                            Console.Clear();
+                            escolheuSair = true;
+                            break;
+                    }
+                }
             }
         }
 
-        static void MenuDaConta(List<string> titulares, List<double> saldos)
+        static void VerSaldo(List<double> saldos, int cpfAcesso)
         {
-            bool escolheuSair = false;
+            Console.Clear();
+            Console.WriteLine($"Saldo atual: R$ {saldos[cpfAcesso]:F2}\n");
+        }
 
-            while (escolheuSair == false)
+        static void Depositar(List<double> saldos, int cpfAcesso)
+        {
+            Console.Clear();
+            Console.Write("Digite o valor para depósito: ");
+            double quantia = double.Parse(Console.ReadLine());
+
+            saldos[cpfAcesso] += quantia;
+
+            Console.WriteLine();
+            Console.WriteLine($"Valor depositado com sucesso! Saldo: R$ {saldos[cpfAcesso]:F2}\n");
+        }
+
+        static void Sacar(List<double> saldos, int cpfAcesso)
+        {
+            Console.Clear();
+            Console.Write("Digite o valor para saque: ");
+            double quantia = double.Parse(Console.ReadLine());
+
+            if (saldos[cpfAcesso] > 0)
             {
-                for (int i = 0; i < titulares.Count; i++)
-                {
-                    Console.WriteLine($"Seja Bem Vindo {titulares[i]}\n");
-                    Console.WriteLine("1 - Para depositar");
-                    Console.WriteLine("2 - Para sacar");
-                    Console.WriteLine("3 - Para transferencia");
-                    Console.WriteLine("4 - Voltar para o menu principal");
-                }
-
-                int opcao = int.Parse(Console.ReadLine());
-
-                MenuSecundario escolha = (MenuSecundario)opcao;
-
-                switch (escolha)
-                {
-                    case MenuSecundario.Depositar:
-                        Depositar();
-                        break;
-                    case MenuSecundario.Sacar:
-                        break;
-                    case MenuSecundario.Transferir:
-                        break;
-                    case MenuSecundario.Sair:
-                        Console.Clear();
-                        escolheuSair = true;
-                        break;
-                }
+                saldos[cpfAcesso] -= quantia;
+                Console.WriteLine();
+                Console.WriteLine($"Saque realizado com sucesso! Saldo: R$ {saldos[cpfAcesso]:F2}\n");
+            } else
+            {
+                Console.WriteLine();
+                Console.WriteLine($"Saldo: R$ {saldos[cpfAcesso]:F2}\n");
+                Console.WriteLine("Saldo insuficiente para saque!\n");
             }
         }
 
-        static void Depositar()
+        static void Transferir(List<double> saldos, int cpfAcesso, List<string> cpfs)
         {
+            Console.Clear();
+            Console.Write("Digite o CPF do titular para transferência: ");
+            string contaDestino = Console.ReadLine();
+            int cpfContaDestino = cpfs.FindIndex(cpf => cpf == contaDestino);
+            Console.WriteLine();
 
+            if (cpfContaDestino == -1)
+            {
+                Console.WriteLine("Esta conta não está cadastrada no banco\n");
+            }
+            else
+            {
+                Console.WriteLine($"Saldo atual: R$ {saldos[cpfAcesso]:F2}");
+                if (saldos[cpfAcesso] <= 0)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Saldo insuficiente para transferência!\n");
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.Write($"Digite o valor para transferir: ");
+                    double quantia = double.Parse(Console.ReadLine());
+
+                    saldos[cpfAcesso] -= quantia;
+                    saldos[cpfContaDestino] += quantia;
+
+                    Console.WriteLine();
+                    Console.WriteLine($"Transferência realizada com sucesso! Saldo: R$ {saldos[cpfAcesso]:F2}\n");
+                }
+            }
         }
 
         static void Main(string[] args)
@@ -216,28 +299,29 @@ namespace Projeto_ByteBank
             {
                 ShowMenu();
                 option = int.Parse(Console.ReadLine());
+                MenuPrincipal escolha = (MenuPrincipal)option;
 
-                switch (option)
+                switch (escolha)
                 {
-                    case 0:
+                    case MenuPrincipal.Sair:
                         Console.WriteLine("Programa encerrado!");
                         break;
-                    case 1:
+                    case MenuPrincipal.Inserir:
                         RegistrarNovoUsuario(cpfs, titulares, senhas, saldos);
                         break;
-                    case 2:
+                    case MenuPrincipal.Deletar:
                         DeletarUsuario(cpfs, titulares, senhas, saldos);
                         break;
-                    case 3:
+                    case MenuPrincipal.Listar:
                         ListarTodasAsContas(cpfs, titulares, saldos);
                         break;
-                    case 4:
-                        ApresentarUsuario(cpfs, titulares, saldos);
+                    case MenuPrincipal.DetalharConta:
+                        DetalhesUsuario(cpfs, titulares, senhas, saldos);
                         break;
-                    case 5:
+                    case MenuPrincipal.TotalBanco:
                         ApresentarValorAcumulado(saldos);
                         break;
-                    case 6:
+                    case MenuPrincipal.ManipularConta:
                         ManipularConta(cpfs, titulares, senhas, saldos);
                         break;
                 }
