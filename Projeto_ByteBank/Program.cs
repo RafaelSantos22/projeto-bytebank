@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Reflection.Metadata.Ecma335;
 using Projeto_ByteBank.Enums;
 
 namespace Projeto_ByteBank
@@ -27,6 +25,9 @@ namespace Projeto_ByteBank
             Console.Clear();
             Console.WriteLine("===== Registrando novo usuário =====\n");
 
+            Console.Write("Digite o nome: ");
+            titulares.Add(Console.ReadLine());
+
             Console.Write("Digite o cpf: ");
             string cpfTitular = Console.ReadLine();
 
@@ -35,9 +36,6 @@ namespace Projeto_ByteBank
             if (indiceCpf == -1)
             {
                 cpfs.Add(cpfTitular);
-
-                Console.Write("Digite o nome: ");
-                titulares.Add(Console.ReadLine());
 
                 Console.Write("Digite a senha: ");
                 senhas.Add(Console.ReadLine());
@@ -184,7 +182,7 @@ namespace Projeto_ByteBank
                     Console.WriteLine("2 - Para depositar");
                     Console.WriteLine("3 - Para sacar");
                     Console.WriteLine("4 - Para transferencia");
-                    Console.WriteLine("0 - Voltar para o menu principal\n");
+                    Console.WriteLine("0 - Fazer Logout\n");
                     Console.Write("Digite sua opção: ");
 
                     int opcao = int.Parse(Console.ReadLine());
@@ -223,7 +221,8 @@ namespace Projeto_ByteBank
         static void Depositar(List<double> saldos, int cpfAcesso)
         {
             Console.Clear();
-            Console.Write("Digite o valor para depósito: ");
+            Console.WriteLine("===== Deposito ======\n");
+            Console.Write("Digite o valor para depósito: R$ ");
             double quantia = double.Parse(Console.ReadLine());
 
             saldos[cpfAcesso] += quantia;
@@ -235,10 +234,11 @@ namespace Projeto_ByteBank
         static void Sacar(List<double> saldos, int cpfAcesso)
         {
             Console.Clear();
-            Console.Write("Digite o valor para saque: ");
+            Console.WriteLine("===== Saque =====");
+            Console.Write("Digite o valor para saque: R$ ");
             double quantia = double.Parse(Console.ReadLine());
 
-            if (saldos[cpfAcesso] > 0)
+            if (saldos[cpfAcesso] > 0 && saldos[cpfAcesso] > quantia)
             {
                 saldos[cpfAcesso] -= quantia;
                 Console.WriteLine();
@@ -246,42 +246,42 @@ namespace Projeto_ByteBank
             } else
             {
                 Console.WriteLine();
-                Console.WriteLine($"Saldo: R$ {saldos[cpfAcesso]:F2}\n");
                 Console.WriteLine("Saldo insuficiente para saque!\n");
+                Console.WriteLine($"Saldo: R$ {saldos[cpfAcesso]:F2}\n");
             }
         }
 
         static void Transferir(List<double> saldos, int cpfAcesso, List<string> cpfs)
         {
             Console.Clear();
+            Console.WriteLine("===== Transferência ======");
             Console.Write("Digite o CPF do titular para transferência: ");
             string contaDestino = Console.ReadLine();
             int cpfContaDestino = cpfs.FindIndex(cpf => cpf == contaDestino);
             Console.WriteLine();
-
+            
             if (cpfContaDestino == -1)
             {
                 Console.WriteLine("Esta conta não está cadastrada no banco\n");
             }
             else
             {
-                Console.WriteLine($"Saldo atual: R$ {saldos[cpfAcesso]:F2}");
-                if (saldos[cpfAcesso] <= 0)
+                Console.WriteLine($"Saldo: R$ {saldos[cpfAcesso]:F2}\n");
+                Console.Write($"Digite o valor para transferir: R$ ");
+                double quantia = double.Parse(Console.ReadLine());
+
+                if (saldos[cpfAcesso] > 0 && saldos[cpfAcesso] > quantia)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Saldo insuficiente para transferência!\n");
+                    saldos[cpfAcesso] -= quantia;
+                    saldos[cpfContaDestino] += quantia;
+
+                    Console.WriteLine($"Transferência realizada com sucesso! Saldo atual: R$ {saldos[cpfAcesso]:F2}\n");
                 }
                 else
                 {
                     Console.WriteLine();
-                    Console.Write($"Digite o valor para transferir: ");
-                    double quantia = double.Parse(Console.ReadLine());
-
-                    saldos[cpfAcesso] -= quantia;
-                    saldos[cpfContaDestino] += quantia;
-
-                    Console.WriteLine();
-                    Console.WriteLine($"Transferência realizada com sucesso! Saldo: R$ {saldos[cpfAcesso]:F2}\n");
+                    Console.WriteLine("Saldo insuficiente para transferência!\n");
                 }
             }
         }
